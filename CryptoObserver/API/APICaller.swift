@@ -18,7 +18,7 @@ final class APICaller {
     private init() {}
     
     public func getCoinsData(
-        complition: @escaping (Result<[String], Error>) -> Void
+        complition: @escaping (Result<[Crypto], Error>) -> Void
     ) {
         guard let url = URL(string: "\(Constants.assetsPoint)?apikey=\(Constants.apiKey)") else { return }
         
@@ -26,7 +26,8 @@ final class APICaller {
             guard let data = data, error == nil else { return }
             
             do {
-                // TODO: - Decode response
+                let coins = try JSONDecoder().decode([Crypto].self, from: data)
+                complition(.success(coins))
             }
             catch {
                 complition(.failure(error))

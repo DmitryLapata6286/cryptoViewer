@@ -17,6 +17,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return tableView
     }()
     
+    private var viewModels = [CoinTableViewCellViewModel]()
+    
+    static let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = .current
+        formatter.allowsFloats = true
+        formatter.numberStyle = NumberFormatter.Style.currency
+        formatter.formatterBehavior = .default
+        
+        return formatter
+    }()
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +36,29 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
+        
+        APICaller.shared.getCoinsData { [weak self] result in
+            switch result {
+            case .success(let models):
+                self?.viewModels = models.compactMap({
+                    
+                    let price = $0.priceUsd ?? 0
+                    
+                    return CoinTableViewCellViewModel(
+                        name: $0.name ?? "N/A",
+                        symbol: $0.assetID ?? "",
+                        price: ViewController.numberFormatter.string(from: NSNumber(value: price)) ?? "N/A")
+                    
+                })
+                
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -33,7 +68,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // MARK: - TableView functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return viewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -42,8 +77,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         ) as? CoinTableViewCell else {
             fatalError()
         }
-        cell.textLabel?.text = "Hi)"
+        cell.configure(with: viewModels[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
 }
 
