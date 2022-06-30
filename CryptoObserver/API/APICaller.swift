@@ -17,9 +17,17 @@ final class APICaller {
     
     private init() {}
     
+    public var icons: [Icon] = []
+    public var whenReadyBlock: ((Result<[Crypto], Error>) -> Void)?
+    
     public func getCoinsData(
-        complition: @escaping (Result<[Crypto], Error>) -> Void
+        completion: @escaping (Result<[Crypto], Error>) -> Void
     ) {
+        guard !icons.isEmpty else {
+            whenReadyBlock = completion
+            return
+        }
+        
         guard let url = URL(string: "\(Constants.assetsPoint)?apikey=\(Constants.apiKey)") else { return }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -27,11 +35,30 @@ final class APICaller {
             
             do {
                 let coins = try JSONDecoder().decode([Crypto].self, from: data)
-                complition(.success(coins))
+                completion(.success(coins))
             }
             catch {
-                complition(.failure(error))
+                completion(.failure(error))
             }
+        }
+        task.resume()
+    }
+    
+    public func getCoinsImage () {
+        guard let url = URL(string: "\(Constants.assetsPoint)icons/55/?apikey=\(Constants.apiKey)") else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let data = data, error == nil else { return }
+        
+            do {
+                self?.icons = try JSONDecoder().decode([Icon].self, from: data)
+                if let completion = self?.whenReadyBlock {
+                    self?.getCoinsData(completion: completion)
+                }
+            } catch {
+                print(error)
+            }
+            
         }
         task.resume()
     }

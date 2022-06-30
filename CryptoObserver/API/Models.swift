@@ -3,7 +3,7 @@
 //  CryptoObserver
 //
 //  Created by Dmitry Lapata on 19.06.22.
-//
+//  Used with QuickType.io
 
 import Foundation
 
@@ -30,5 +30,15 @@ struct Crypto: Codable {
         case priceUsd = "price_usd"
         case dataStart = "data_start"
         case dataEnd = "data_end"
+    }
+}
+
+struct Icon: Codable {
+    let assetID: String?
+    let url: String?
+
+    enum CodingKeys: String, CodingKey {
+        case assetID = "asset_id"
+        case url
     }
 }
