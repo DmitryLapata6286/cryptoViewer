@@ -15,6 +15,7 @@
 		FDF44CAA285E3F1C006FFCB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDF44CA8285E3F1C006FFCB9 /* LaunchScreen.storyboard */; };
 		FDF44CBA285E4DE4006FFCB9 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF44CB9285E4DE4006FFCB9 /* APICaller.swift */; };
 		FDF44CBC285E5C24006FFCB9 /* CoinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF44CBB285E5C24006FFCB9 /* CoinTableViewCell.swift */; };
+		FDF44CBE285FB5FD006FFCB9 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF44CBD285FB5FD006FFCB9 /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		FDF44CAB285E3F1C006FFCB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FDF44CB9285E4DE4006FFCB9 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		FDF44CBB285E5C24006FFCB9 /* CoinTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTableViewCell.swift; sourceTree = "<group>"; };
+		FDF44CBD285FB5FD006FFCB9 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				FDF44CB9285E4DE4006FFCB9 /* APICaller.swift */,
+				FDF44CBD285FB5FD006FFCB9 /* Models.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				FDF44CA2285E3F18006FFCB9 /* ViewController.swift in Sources */,
 				FDF44C9E285E3F18006FFCB9 /* AppDelegate.swift in Sources */,
 				FDF44CA0285E3F18006FFCB9 /* SceneDelegate.swift in Sources */,
+				FDF44CBE285FB5FD006FFCB9 /* Models.swift in Sources */,
 				FDF44CBA285E4DE4006FFCB9 /* APICaller.swift in Sources */,
 				FDF44CBC285E5C24006FFCB9 /* CoinTableViewCell.swift in Sources */,
 			);
