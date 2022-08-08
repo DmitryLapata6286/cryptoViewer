@@ -11,6 +11,7 @@ struct CoinTableViewCellViewModel {
     let name: String
     let symbol: String
     let price: String
+    let icon: URL?
 }
 
 class CoinTableViewCell: UITableViewCell {
@@ -40,12 +41,19 @@ class CoinTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let iconView: UIImageView = {
+        let iconView = UIImageView()
+        iconView.contentMode = .scaleAspectFit
+        return iconView
+    }()
+    
     //init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(nameLabel)
         contentView.addSubview(symbolLabel)
         contentView.addSubview(priceLabel)
+        contentView.addSubview(iconView)
     }
     
     required init?(coder: NSCoder){
@@ -55,6 +63,13 @@ class CoinTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        let size: CGFloat = contentView.frame.size.height/1.1
+        iconView.frame = CGRect(x: 20,
+                                y: 0,
+                                width: size.size.width,
+                                height: size.size.height)
+        
         nameLabel.sizeToFit()
         priceLabel.sizeToFit()
         symbolLabel.sizeToFit()

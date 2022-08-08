@@ -43,11 +43,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 self?.viewModels = models.compactMap({
                     
                     let price = $0.priceUsd ?? 0
+                    let coinItem = $0
+                    let iconUrl = URL(string:
+                                        APICaller.shared.icons.filter({ icon in
+                        icon.assetID == coinItem.assetID
+                    }).first?.url ?? "")
                     
                     return CoinTableViewCellViewModel(
                         name: $0.name ?? "N/A",
                         symbol: $0.assetID ?? "",
-                        price: ViewController.numberFormatter.string(from: NSNumber(value: price)) ?? "N/A")
+                        price: ViewController.numberFormatter.string(from: NSNumber(value: price)) ?? "N/A",
+                        icon: iconUrl)
                     
                 })
                 
